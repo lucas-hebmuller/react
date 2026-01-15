@@ -1,12 +1,20 @@
 import { PostContext } from "../contexts/PostContext";
 import { useContext } from "react";
+import Post from "../components/Post";
 
 function Home() {
-    return (
-        <div>Home page</div>
+  const { posts } = useContext(PostContext);
 
-        20
-    );
+  return (
+    <div>
+      <h3>Blog Posts</h3>
+      <ul>
+        {posts.map((post, key) => (
+          <Post post={post} key={key} />
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default Home;

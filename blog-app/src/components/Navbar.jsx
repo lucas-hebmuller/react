@@ -2,14 +2,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div
-      style={{
-        width: "100vw",
-        display: "flex",
-        gap: "10px",
-        justifyContent: "center",
-      }}
-    >
+    <div>
         <Link to="/">Home</Link>
         <Link to="/create-post">Create Post</Link>
         <Link to="/edit-post">Edit Post</Link>
