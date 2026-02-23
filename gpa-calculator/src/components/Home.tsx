@@ -1,81 +1,24 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-type Course = {
-  id: number;
-  courseName: string;
-  grade: string;
-  credits: number;
-};
+import AddCourseForm from "./AddCourseForm";
+import {
+  calculateCumulativeGPA,
+  calculateTermGPA,
+} from "../utils/gpaCalculations";
+import { CourseFormData, Semester } from "../utils/types";
 
 function Home() {
-  const [coursesList, setCoursesList] = useState<Course[]>([]);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  function addCourse() {
-    const lastId = coursesList.length > 0 ? coursesList[coursesList.length - 1].id : 0;
-
-    setCoursesList((prev) => [
-      ...prev,
-      { id: lastId + 1, courseName: "Aaaaaaaaaaaa", grade: "Z", credits: 0 },
-    ]);
-  }
-
-  function deleteCourse(id: number) {
-    setCoursesList((prev) => prev.filter((course) => course.id !== id));
-  }
+  const [semesters, setSemesters] = useState<Semester[]>([
+    { id: 1, name: "Semester 1", courses: [] },
+  ]);
 
   return (
     <div>
       <h2>Semester</h2>
 
-      <form onSubmit={handleSubmit(addCourse)}>
-        <label htmlFor="courseName">Course name: </label>
-        <input
-          type="text"
-          id="courseName"
-          placeholder="New course..."
-          {...register("courseName", { required: "Course name is required!" })}
-        />
-        {errors.courseName && <p>{errors.courseName.message}</p>}
-
-        <label htmlFor="grade">Grade: </label>
-        <select id="grade" {...register("grade", {required: "Course grade is required!"})}>
-          <option value="A">A</option>
-          <option value="A-">A-</option>
-          <option value="B+">B+</option>
-          <option value="B">B</option>
-          <option value="B-">B-</option>
-          <option value="C+">C</option>
-          <option value="C">C</option>
-          <option value="D">D</option>
-          <option value="F">F</option>
-        </select>
-        {errors.grade && <p>{errors.credit.message}</p>}
-
-        <label htmlFor="credits">Credits: </label>
-        <input
-          type="number"
-          id="credits"
-          placeholder="Number of credits..."
-          {...register("credits", {
-            required: "Number of credits is required!",
-          })}
-        />
-        {errors.credits && <p>{errors.credits.message}</p>}
-
-        <button type="submit">Add Course</button>
-      </form>
-
       <ul>
         {coursesList.map((course) => (
           <li key={course.id}>
-            {course.courseName}
+            {course.courseName} — {course.grade} — {course.credits} credits
             <button onClick={() => deleteCourse(course.id)}>Delete</button>
           </li>
         ))}
