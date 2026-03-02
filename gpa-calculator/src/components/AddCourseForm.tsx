@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { CourseFormData } from "../utils/types";
+import type { CourseFormData } from "../utils/types";
 
 type AddCourseFormProps = {
   onAddCourse: (course: CourseFormData) => void;

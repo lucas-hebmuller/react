@@ -1,6 +1,27 @@
+:root {
+  --color1: #331832;
+  --color2: #1A5E63;
+  --color3: #5EB1BF;
+  --color4: #F0F3BD;
+  --color5: #D00000;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
+}
+
+body {
+  background-color: var(--color4);
+}
+
+.navbar {
+  background-color: var(--color1);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 20px;
 }
 
 

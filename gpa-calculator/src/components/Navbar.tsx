@@ -1,6 +1,6 @@
 function Navbar() {
   return (
-    <div>
+    <div className="navbar">
       <h1>GPA Calculator</h1>
     </div>
   );
