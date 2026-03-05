@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddCourseForm from "./AddCourseForm";
 import {
   calculateCumulativeGPA,
@@ -7,9 +7,16 @@ import {
 import type { CourseFormData, Semester } from "../utils/types";
 
 function Home() {
-  const [semesters, setSemesters] = useState<Semester[]>([
-    { id: 1, name: "Semester 1", courses: [] },
-  ]);
+  const [semesters, setSemesters] = useState<Semester[]>(() => {
+    const saved = localStorage.getItem("semesters");
+    return saved
+      ? JSON.parse(saved)
+      : [{ id: 1, name: "Semester 1", courses: [] }];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("semesters", JSON.stringify(semesters));
+  }, [semesters]);
 
   function addCourse(semesterId: number, newCourse: CourseFormData) {
     setSemesters((prev) =>
@@ -52,13 +59,17 @@ function Home() {
   }
 
   return (
-    <div>
-      <h3>Cumulative GPA: {calculateCumulativeGPA(semesters)}</h3>
+    <div className="container">
+      <h3 className="gpa-display">
+        Cumulative GPA: {calculateCumulativeGPA(semesters)}
+      </h3>
 
       {semesters.map((semester) => (
-        <div key={semester.id}>
+        <div className="semester-card" key={semester.id}>
           <h2>{semester.name}</h2>
-          <h4>Term GPA: {calculateTermGPA(semester.courses)}</h4>
+          <h4 className="gpa-display">
+            Term GPA: {calculateTermGPA(semester.courses)}
+          </h4>
 
           <AddCourseForm
             onAddCourse={(course) => addCourse(semester.id, course)}
@@ -67,9 +78,12 @@ function Home() {
           <ul>
             {semester.courses.map((course) => (
               <li key={course.id}>
-                {course.courseName} - {course.grade} - {course.credits} credits
-                <button onClick={() => deleteCourse(semester.id, course.id)}>
-                  Delete
+                {course.courseName} • {course.grade} • {course.credits} credits
+                <button
+                  className="btn-danger"
+                  onClick={() => deleteCourse(semester.id, course.id)}
+                >
+                  &#x1F5D1;
                 </button>
               </li>
             ))}

@@ -59,7 +59,7 @@ function AddCourseForm({ onAddCourse }: AddCourseFormProps) {
       />
       {errors.credits && <p>{errors.credits.message}</p>}
 
-      <button type="submit">Add Course</button>
+      <button className="btn-primary" type="submit">Add Course</button>
     </form>
   );
 }
