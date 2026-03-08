@@ -52,9 +52,11 @@ function AddCourseForm({ onAddCourse }: AddCourseFormProps) {
         type="number"
         id="credits"
         placeholder="Number of credits..."
+        step="0.5"
         {...register("credits", {
           required: "Number of credits is required!",
           valueAsNumber: true,
+          min: { value: 0.5, message: "Credits must be greater than 0"}
         })}
       />
       {errors.credits && <p>{errors.credits.message}</p>}
